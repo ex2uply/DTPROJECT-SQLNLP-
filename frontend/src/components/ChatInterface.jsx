@@ -57,7 +57,14 @@ export default function ChatInterface({ onSendQuery, isLoading }) {
         transition={{ delay: 0.5 }}
         className="flex flex-wrap gap-2 justify-center mt-4"
       >
-        {["Show me all sales", "Count sales by product", "Sales trend"].map((suggestion, idx) => (
+        {[
+          "Total revenue by city in 2019",
+          "Top 5 most expensive products sold",
+          "Sales count for 'MacBook Pro Laptop'",
+          "Monthly sales trend for San Francisco",
+          "Average order value by product",
+          "Orders with quantity greater than 2"
+        ].map((suggestion, idx) => (
           <button
             key={idx}
             onClick={() => setQuery(suggestion)}
