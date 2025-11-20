@@ -1,0 +1,13 @@
+{
+  "name": "dtproject",
+  "version": "1.0.0",
+  "description": "AI/ML Database Query System",
+  "scripts": {
+    "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && python main.py",
+    "frontend": "cd frontend && npm run dev"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

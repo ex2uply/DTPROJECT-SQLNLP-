@@ -59,7 +59,7 @@ export default function ChatInterface({ onSendQuery, isLoading }) {
       >
         {[
           "Total revenue by city in 2019",
-          "Top 5 most expensive products sold",
+          "Top 5 most expensive unique products sold",
           "Sales count for 'MacBook Pro Laptop'",
           "Monthly sales trend for San Francisco",
           "Average order value by product",

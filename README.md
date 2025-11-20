@@ -24,45 +24,52 @@ A full-stack application that allows users to query a sales database using natur
 
 ## Setup Instructions
 
-### 1. Backend Setup
+### Quick Start (Recommended)
 
-Navigate to the backend directory and install dependencies:
-
+1. Install backend dependencies:
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the `backend` directory with your API key:
-
+2. Create a `.env` file in the `backend` directory:
 ```env
 GEMINI_API_KEY=your_actual_api_key_here
 ```
 
-Start the backend server:
-
-```bash
-python main.py
-```
-
-The server will start at `http://0.0.0.0:8000`. On the first run, it will automatically load the `Sales Data.csv` file into the database.
-
-### 2. Frontend Setup
-
-Navigate to the frontend directory and install dependencies:
-
+3. Install frontend dependencies:
 ```bash
 cd frontend
 npm install
 ```
 
-Start the development server:
-
+4. Install root dependencies and start both servers:
 ```bash
+cd ..
+npm install
 npm run dev
 ```
 
-Open your browser to `http://localhost:5173`.
+This will start both the backend (port 8000) and frontend (port 5173) simultaneously. Open your browser to `http://localhost:5173`.
+
+### Manual Setup (Alternative)
+
+If you prefer to run the servers separately:
+
+**Backend:**
+```bash
+cd backend
+pip install -r requirements.txt
+# Create .env file with GEMINI_API_KEY
+python main.py
+```
+
+**Frontend (in a new terminal):**
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## Usage
 

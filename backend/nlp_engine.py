@@ -22,12 +22,14 @@ class NLPEngine:
             print("[WARNING] GEMINI_API_KEY not set - LLM features disabled")
             print("   Set environment variable: GEMINI_API_KEY=your_key_here")
 
-    def generate_sql(self, query: str, schema: Dict[str, Any]) -> str:
+    def generate_sql(self, query: str, schema: Dict[str, Any]) -> tuple[str, str | None]:
         """
         Generate SQL from natural language query using Gemini LLM.
+        Returns: (sql_query, warning_message)
         """
         if not self.llm_enabled:
-            return self._fallback_sql_generation(query, schema)
+            sql = self._fallback_sql_generation(query, schema)
+            return sql, "⚠️ Gemini API key not configured. Using basic pattern matching."
         
         try:
             # Prepare schema information with explicit values for context
@@ -63,14 +65,29 @@ SQL QUERY:'''
             sql = sql.replace(';', '').strip()
             
             print(f"Generated SQL: {sql}")
-            return sql
+            return sql, None
             
         except Exception as e:
-            print(f"[ERROR] LLM GENERATION FAILED: {type(e).__name__}: {e}")
+            error_type = type(e).__name__
+            error_msg = str(e)
+            print(f"[ERROR] LLM GENERATION FAILED: {error_type}: {error_msg}")
             import traceback
             traceback.print_exc()
             print("Falling back to pattern matching...")
-            return self._fallback_sql_generation(query, schema)
+            
+            sql = self._fallback_sql_generation(query, schema)
+            
+            # Create user-friendly warning message based on error type
+            if "ResourceExhausted" in error_type or "429" in error_msg:
+                warning = "⚠️ Gemini API quota exceeded. Using basic pattern matching. Results may not match your exact query."
+            elif "connection" in error_msg.lower() or "timeout" in error_msg.lower():
+                warning = "⚠️ Cannot connect to Gemini API. Using basic pattern matching. Please check your internet connection."
+            elif "invalid" in error_msg.lower() and "api" in error_msg.lower():
+                warning = "⚠️ Invalid Gemini API key. Using basic pattern matching. Please check your configuration."
+            else:
+                warning = f"⚠️ Gemini API error: {error_type}. Using basic pattern matching."
+            
+            return sql, warning
     
     def _format_schema_with_context(self, schema: Dict[str, Any]) -> str:
         """Format schema information with sample values for better LLM context."""

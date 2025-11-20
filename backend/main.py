@@ -46,8 +46,8 @@ async def process_query(request: QueryRequest):
         # 1. Get Schema
         schema = db_manager.get_schema()
         
-        # 2. Generate SQL
-        sql = nlp_engine.generate_sql(request.query, schema)
+        # 2. Generate SQL (returns tuple: sql, warning)
+        sql, warning = nlp_engine.generate_sql(request.query, schema)
         
         # 3. Execute SQL
         results = db_manager.execute_query(sql)
@@ -55,11 +55,17 @@ async def process_query(request: QueryRequest):
         # 4. Generate Report/Chart Data
         chart_data = reporting_module.generate_report(results)
         
-        return {
+        response_data = {
             "sql": sql,
             "results": results,
             "chart_data": chart_data
         }
+        
+        # Add warning if present
+        if warning:
+            response_data["error"] = warning
+        
+        return response_data
     except Exception as e:
         return {
             "sql": "",
