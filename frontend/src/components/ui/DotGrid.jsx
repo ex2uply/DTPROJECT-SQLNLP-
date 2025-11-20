@@ -1,18 +1,8 @@
 import { useRef, useEffect, useCallback, useMemo } from 'react';
 import { gsap } from 'gsap';
-// import { InertiaPlugin } from 'gsap/InertiaPlugin'; // InertiaPlugin is a paid Club GSAP plugin, removing to avoid errors if user doesn't have it.
-// Using standard GSAP for basic animation instead if Inertia is missing, or just keeping the code generic.
-// Actually, the user provided code imports InertiaPlugin. If they don't have the paid version, this will fail.
-// However, I must follow the user's code. But standard 'gsap' package doesn't include InertiaPlugin.
-// I will comment out the InertiaPlugin registration and usage to prevent crashes, 
-// or try to use a fallback. 
-// Wait, the user explicitly gave me code with InertiaPlugin. 
-// If I use it, it will crash because 'gsap/InertiaPlugin' is not in the free 'gsap' package.
-// I will modify it slightly to work with free GSAP (using simple to() instead of inertia object) to ensure it runs.
-
+// InertiaPlugin is a paid Club GSAP feature. 
+// Adapting logic to work with standard GSAP.
 import './DotGrid.css';
-
-// gsap.registerPlugin(InertiaPlugin); 
 
 const throttle = (func, limit) => {
   let lastCall = 0;
@@ -210,13 +200,12 @@ const DotGrid = ({
           const pushX = dot.cx - pr.x + vx * 0.005;
           const pushY = dot.cy - pr.y + vy * 0.005;
           
-          // MODIFIED: Removed InertiaPlugin dependency for compatibility
-          // Using standard GSAP tween with elastic ease to simulate similar effect
+          // ADAPTED: Using standard tween instead of inertia plugin
           gsap.to(dot, {
             xOffset: pushX,
             yOffset: pushY,
-            duration: 0.5,
-            ease: "power2.out",
+            duration: 0.6,
+            ease: "power4.out",
             onComplete: () => {
               gsap.to(dot, {
                 xOffset: 0,
@@ -244,12 +233,12 @@ const DotGrid = ({
           const pushX = (dot.cx - cx) * shockStrength * falloff;
           const pushY = (dot.cy - cy) * shockStrength * falloff;
           
-          // MODIFIED: Removed InertiaPlugin dependency
+          // ADAPTED: Using standard tween instead of inertia plugin
           gsap.to(dot, {
             xOffset: pushX,
             yOffset: pushY,
-            duration: 0.5,
-            ease: "power2.out",
+            duration: 0.6,
+            ease: "power4.out",
             onComplete: () => {
               gsap.to(dot, {
                 xOffset: 0,

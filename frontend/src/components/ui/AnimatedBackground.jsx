@@ -8,11 +8,11 @@ export default function AnimatedBackground() {
         gap={24}
         baseColor="#4a4a4a"
         activeColor="#ffffff"
-        proximity={100}
-        shockRadius={100}
-        shockStrength={2}
-        resistance={750}
-        returnDuration={1.5}
+        proximity={60}
+        shockRadius={60}
+        shockStrength={1}
+        resistance={2000}
+        returnDuration={3.0}
       />
     </div>
   );
