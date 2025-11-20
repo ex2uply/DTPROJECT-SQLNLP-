@@ -14,7 +14,7 @@ class NLPEngine:
         api_key = os.getenv('GEMINI_API_KEY', '')
         if api_key:
             genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-flash')
+            self.model = genai.GenerativeModel('gemini-2.0-flash')
             self.llm_enabled = True
             print("✓ Gemini LLM initialized")
         else:
@@ -67,7 +67,9 @@ SQL QUERY:'''
             return sql
             
         except Exception as e:
-            print(f"LLM Error: {e}")
+            print(f"❌ LLM GENERATION FAILED: {type(e).__name__}: {e}")
+            import traceback
+            traceback.print_exc()
             print("Falling back to pattern matching...")
             return self._fallback_sql_generation(query, schema)
     
