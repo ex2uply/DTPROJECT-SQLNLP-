@@ -2,7 +2,9 @@ import { useState } from 'react';
 import axios from 'axios';
 import ChatInterface from './components/ChatInterface';
 import ResultsDisplay from './components/ResultsDisplay';
-import { Sparkles } from 'lucide-react';
+import AnimatedBackground from './components/ui/AnimatedBackground';
+import TypewriterTitle from './components/ui/TypewriterTitle';
+import { motion } from 'framer-motion';
 
 function App() {
   const [results, setResults] = useState(null);
@@ -32,40 +34,61 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen p-8">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <Sparkles className="w-10 h-10 text-blue-400" />
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-            AI/ML Database Query System
-          </h1>
+    <div className="min-h-screen text-white relative">
+      <AnimatedBackground />
+      
+      <div className="container mx-auto px-4 py-16 relative z-10">
+        {/* Header */}
+        <div className="text-center mb-16">
+          <motion.div 
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white text-black text-sm font-medium"
+          >
+            ✨ AI-Powered Database Assistant
+          </motion.div>
+          
+          <TypewriterTitle 
+            text="Ask Your Data Anything" 
+            className="text-6xl md:text-7xl font-bold text-white mb-6 tracking-tight"
+          />
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 1, duration: 1 }}
+            className="text-gray-400 text-xl max-w-2xl mx-auto leading-relaxed"
+          >
+            Transform natural language into powerful insights. Just type your question and let our AI handle the complex SQL generation.
+          </motion.p>
         </div>
-        <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-          Transform natural language into powerful SQL queries. Get instant insights with interactive visualizations.
-        </p>
+
+        {/* Chat Interface */}
+        <ChatInterface onSendQuery={handleQuery} isLoading={isLoading} />
+
+        {/* Error Display */}
+        {error && (
+          <motion.div 
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="w-full max-w-3xl mx-auto mt-8"
+          >
+            <div className="bg-black border-2 border-white rounded-lg p-4 text-center">
+              <p className="text-white font-medium">{error}</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Results Display */}
+        {results && (
+          <ResultsDisplay 
+            data={results.data} 
+            sql={results.sql} 
+            chartData={results.chartData}
+          />
+        )}
       </div>
-
-      {/* Chat Interface */}
-      <ChatInterface onSendQuery={handleQuery} isLoading={isLoading} />
-
-      {/* Error Display */}
-      {error && (
-        <div className="w-full max-w-4xl mx-auto mt-6">
-          <div className="backdrop-blur-xl bg-red-500/10 border border-red-500/30 rounded-2xl p-4">
-            <p className="text-red-400 text-center">{error}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Results Display */}
-      {results && (
-        <ResultsDisplay 
-          data={results.data} 
-          sql={results.sql} 
-          chartData={results.chartData}
-        />
-      )}
     </div>
   );
 }
