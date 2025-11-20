@@ -36,18 +36,18 @@ class DBManager:
                     # Save to SQLite
                     table_name = 'sales'
                     df.to_sql(table_name, conn, if_exists='replace', index=False)
-                    print(f"✓ Created table '{table_name}' with {len(df)} records")
-                    print(f"✓ Columns: {', '.join(df.columns.tolist())}")
+                    print(f"[SUCCESS] Created table '{table_name}' with {len(df)} records")
+                    print(f"[INFO] Columns: {', '.join(df.columns.tolist())}")
                     
                 else:
-                    print(f"❌ Sales Data.csv not found at {csv_path}")
+                    print(f"[ERROR] Sales Data.csv not found at {csv_path}")
                     print("Creating sample data instead...")
                     self._create_sample_data(cursor, conn)
                     
                 conn.commit()
                     
             except Exception as e:
-                print(f"❌ Error loading CSV: {e}")
+                print(f"[ERROR] Error loading CSV: {e}")
                 print("Creating sample data instead...")
                 self._create_sample_data(cursor, conn)
         

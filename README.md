@@ -1,162 +1,77 @@
-# AI/ML Database Query System
+# AI-Powered Database Query System
 
-Transform natural language into powerful SQL queries with this full-stack application featuring AI-powered query generation, automatic execution, and interactive data visualizations.
+A full-stack application that allows users to query a sales database using natural language. The system uses Google's Gemini 2.0 Flash LLM to convert English questions into SQL queries, executes them against a local SQLite database, and displays the results in a clean, minimal interface.
 
-![Application Demo](https://img.shields.io/badge/Status-Production%20Ready-success)
-![Python](https://img.shields.io/badge/Python-3.8+-blue)
-![React](https://img.shields.io/badge/React-19.2.0-61dafb)
+## Features
 
-## 🌟 Features
+- **Natural Language Processing**: Converts questions like "Show me sales in San Francisco" into valid SQL.
+- **Context-Aware**: The AI understands the specific data in your database (e.g., city names, product types).
+- **Local Data Processing**: Loads data from `Sales Data.csv` (185,000+ records) into a local SQLite database.
+- **Minimal UI**: A clean, black-and-white dark mode interface built with React and Tailwind CSS.
+- **Secure Configuration**: Uses `.env` files for API key management.
 
-- **Natural Language Processing**: Ask questions in plain English
-- **Automatic SQL Generation**: AI-powered query translation
-- **Interactive Visualizations**: Beautiful charts with Recharts
-- **Real-time Results**: Instant query execution and display
-- **Modern UI**: Glassmorphic design with Tailwind CSS v4
-- **Sample Database**: Pre-loaded SQLite database with sales data
+## Tech Stack
 
-## 🚀 Quick Start
+- **Frontend**: React, Tailwind CSS, Framer Motion, Lucide Icons
+- **Backend**: Python, FastAPI, SQLite, Pandas
+- **AI/LLM**: Google Gemini 2.0 Flash (via `google-generativeai`)
 
-### Prerequisites
-- Python 3.8 or higher
-- Node.js 16 or higher
-- npm or yarn
+## Prerequisites
 
-### Installation
+- Node.js (v16+)
+- Python (v3.8+)
+- Google Gemini API Key
 
-1. **Clone the repository**
-```bash
-git clone https://github.com/ex2uply/DTPROJECT-SQLNLP-.git
-cd DTPROJECT-SQLNLP-
-```
+## Setup Instructions
 
-2. **Set up Backend**
+### 1. Backend Setup
+
+Navigate to the backend directory and install dependencies:
+
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
-3. **Set up Frontend**
+Create a `.env` file in the `backend` directory with your API key:
+
+```env
+GEMINI_API_KEY=your_actual_api_key_here
+```
+
+Start the backend server:
+
+```bash
+python main.py
+```
+
+The server will start at `http://0.0.0.0:8000`. On the first run, it will automatically load the `Sales Data.csv` file into the database.
+
+### 2. Frontend Setup
+
+Navigate to the frontend directory and install dependencies:
+
 ```bash
 cd frontend
 npm install
 ```
 
-### Running the Application
+Start the development server:
 
-1. **Start the Backend Server**
 ```bash
-cd backend
-python main.py
-```
-Backend runs on `http://localhost:8000`
-
-2. **Start the Frontend (in a new terminal)**
-```bash
-cd frontend
 npm run dev
 ```
-Frontend runs on `http://localhost:5173`
 
-3. **Open your browser** to `http://localhost:5173`
+Open your browser to `http://localhost:5173`.
 
-## 💡 Usage Examples
+## Usage
 
-Try these natural language queries:
-- "Show me all sales"
-- "Count sales by product"
-- "Sales data for laptops"
-- "Total revenue by date"
+1. Type a question in the search bar (e.g., "What is the total revenue by product?").
+2. The system will generate the corresponding SQL query.
+3. Results will be displayed in a table format.
 
-## 🏗️ Architecture
+## Project Structure
 
-### Backend Stack
-- **FastAPI**: High-performance web framework
-- **SQLite**: Lightweight database
-- **Pandas**: Data manipulation and analysis
-- **Python Modules**:
-  - `nlp_engine.py`: Natural language processing
-  - `db_manager.py`: Database operations
-  - `reporting.py`: Chart configuration and data analysis
-
-### Frontend Stack
-- **React 19**: Modern UI framework
-- **Vite**: Fast build tool
-- **Tailwind CSS v4**: Utility-first styling
-- **Recharts**: Data visualization
-- **Axios**: HTTP client
-- **Lucide React**: Icon library
-
-## 📁 Project Structure
-
-```
-DTPROJECT-SQLNLP-/
-├── backend/
-│   ├── main.py              # FastAPI application
-│   ├── db_manager.py        # Database operations
-│   ├── nlp_engine.py        # NLP & SQL generation
-│   ├── reporting.py         # Chart configuration
-│   ├── requirements.txt     # Python dependencies
-│   └── example.db          # SQLite database (auto-created)
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ChatInterface.jsx
-│   │   │   └── ResultsDisplay.jsx
-│   │   ├── App.jsx
-│   │   └── index.css
-│   ├── package.json
-│   └── tailwind.config.js
-│
-└── README.md
-```
-
-## 🔧 Configuration
-
-### Backend API Endpoints
-- `GET /`: Welcome message
-- `GET /health`: Health check
-- `POST /query`: Process natural language query
-
-### Frontend Environment
-Update the API URL in `frontend/src/App.jsx` if deploying to production:
-```javascript
-const response = await axios.post('http://localhost:8000/query', {
-  query: query
-});
-```
-
-## 🎨 Screenshots
-
-The application features a modern, dark-themed interface with:
-- Gradient backgrounds
-- Glassmorphic input fields
-- Interactive data tables
-- Dynamic chart visualizations
-- Real-time SQL query display
-
-## 🔮 Future Enhancements
-
-- [ ] OpenAI/Gemini integration for advanced NLP
-- [ ] Support for PostgreSQL, MySQL databases
-- [ ] User authentication and query history
-- [ ] Export reports (PDF, Excel)
-- [ ] Multiple chart types (pie, scatter, area)
-- [ ] Natural language report generation
-
-## 📄 License
-
-This project is open source and available under the MIT License.
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 👨‍💻 Developer
-
-Built with ❤️ using FastAPI, React, and Tailwind CSS
-
----
-
-**Note**: This is a demonstration project. For production use, implement proper authentication, input validation, and SQL injection prevention.
+- `backend/`: Contains the FastAPI application, database logic, and NLP engine.
+- `frontend/`: Contains the React application and UI components.
+- `Sales Data.csv`: The source dataset used by the application.

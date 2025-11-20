@@ -16,10 +16,10 @@ class NLPEngine:
             genai.configure(api_key=api_key)
             self.model = genai.GenerativeModel('gemini-2.0-flash')
             self.llm_enabled = True
-            print("✓ Gemini LLM initialized")
+            print("[SUCCESS] Gemini LLM initialized")
         else:
             self.llm_enabled = False
-            print("⚠️  GEMINI_API_KEY not set - LLM features disabled")
+            print("[WARNING] GEMINI_API_KEY not set - LLM features disabled")
             print("   Set environment variable: GEMINI_API_KEY=your_key_here")
 
     def generate_sql(self, query: str, schema: Dict[str, Any]) -> str:
@@ -67,7 +67,7 @@ SQL QUERY:'''
             return sql
             
         except Exception as e:
-            print(f"❌ LLM GENERATION FAILED: {type(e).__name__}: {e}")
+            print(f"[ERROR] LLM GENERATION FAILED: {type(e).__name__}: {e}")
             import traceback
             traceback.print_exc()
             print("Falling back to pattern matching...")

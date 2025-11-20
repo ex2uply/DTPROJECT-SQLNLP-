@@ -46,7 +46,7 @@ function App() {
             transition={{ duration: 0.8 }}
             className="inline-block mb-4 px-4 py-1.5 rounded-full bg-white text-black text-sm font-medium"
           >
-            ✨ AI-Powered Database Assistant
+            AI-Powered Database Assistant
           </motion.div>
           
           <TypewriterTitle 
