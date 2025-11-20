@@ -44,7 +44,6 @@ RULES:
 2. For text filtering, use LIKE with % for partial matches (e.g. WHERE city LIKE '%San Francisco%').
 3. For date filtering, the 'order_date' format is 'MM/DD/YY HH:MM'. Use strftime if needed.
 4. Return ONLY the raw SQL query. No markdown, no explanations.
-5. If the user asks for "sales", they usually mean SUM(sales).
 6. If the user asks for "count", they mean COUNT(*).
 
 USER QUERY: {query}
